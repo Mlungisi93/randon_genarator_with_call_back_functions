@@ -1,40 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:randon_genarator_with_call_back_functions/randomizer_page.dart';
 import 'package:randon_genarator_with_call_back_functions/range_selector_form.dart';
 
-class RangeSelectorPage extends StatefulWidget {
-  const RangeSelectorPage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<RangeSelectorPage> createState() => _RangeSelectorState();
-}
-
-class _RangeSelectorState extends State<RangeSelectorPage> {
-  int _min = 0, _max = 0;
+class RangeSelectorPage extends HookWidget {
   final _formKey = GlobalKey<FormState>();
+
+  RangeSelectorPage({
+    super.key,
+  });
+//Or old school RangeSelectorPage({Key? key}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final min = useState<int>(0);
+    final max = useState<int>(0);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title: Text(widget.title),
+        title: Text("Select Page"),
       ),
       body: RangeSelectorForm(
           formKey: _formKey,
-          intMinValueSetter: (value) => _min = value,
-          intMaxValueSetter: (value) => _max = value),
+          intMinValueSetter: (value) => min.value = value,
+          intMaxValueSetter: (value) => max.value = value),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (_formKey.currentState!.validate() == true) {
             _formKey.currentState!.save();
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (xontext) => GeneratorPage(
-                      min: _min,
-                      max: _max,
+                      min: min.value,
+                      max: max.value,
                     )));
           }
         },

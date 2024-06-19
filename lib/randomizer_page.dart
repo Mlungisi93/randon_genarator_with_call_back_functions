@@ -1,40 +1,32 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class GeneratorPage extends StatefulWidget {
-  const GeneratorPage({super.key, required this.min, required this.max});
+class GeneratorPage extends HookWidget {
+  GeneratorPage({super.key, required this.min, required this.max});
   final int min;
   final int max;
+  final randomGenerator = Random();
 
-  @override
-  State<GeneratorPage> createState() => _GeneratorPageState();
-}
-
-class _GeneratorPageState extends State<GeneratorPage> {
-  int? generatedInt;
   @override
   Widget build(BuildContext context) {
+    final generatedNumber = useState<int?>(null);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title: Text('Generator Page'),
+        title: const Text('Randomize'),
       ),
       body: Center(
           child: Text(
-        generatedInt == null
-            ? "Click generate button below"
-            : 'Generated random number between range of ${widget.min} to ${widget.max} is: $generatedInt',
+        generatedNumber.value?.toString() ?? 'Click generate button below',
         style: const TextStyle(fontSize: 42),
       )),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          setState(() {
-            generatedInt =
-                widget.min + Random().nextInt((widget.max - widget.min) + 1);
-          });
+          generatedNumber.value =
+              min + randomGenerator.nextInt((max - min) + 1);
         },
         label: const Text('Generate'),
       ),

@@ -34,9 +34,8 @@ class MyApp extends StatelessWidget {
         useMaterial3:
             true, // this will force us to assign background color of every appBar
       ), //Randomiser
-      home: RangeSelectorPage(
-          title:
-              'Select Range'), //home page should be renamed to Range selector Page
+      home:
+          RangeSelectorPage(), //home page should be renamed to Range selector Page
       debugShowCheckedModeBanner: false,
     );
   }
