@@ -31,12 +31,25 @@ dependencies:
   cupertino_icons: ^1.0.6
   flutter:
     sdk: flutter
-  provider: ^6.1.2
+  flutter_riverpod:
+    git:
+     url: https://github.com/rrousselGit/riverpod.git
+     ref: dev
+     path: packages/flutter_riverpod
 
+#dependency override
 dev_dependencies:
   flutter_lints: ^3.0.0
   flutter_test:
     sdk: flutter
+
+dependency_overrides:
+  riverpod:
+    git:
+     url: https://github.com/rrousselGit/riverpod.git
+     ref: dev
+     path: packages/riverpod
+  
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
