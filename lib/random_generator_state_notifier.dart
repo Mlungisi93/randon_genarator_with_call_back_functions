@@ -1,6 +1,15 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/legacy.dart';
+
+class RandomizerStateNotifier extends StateNotifier {
+  RandomizerStateNotifier(super.state);
+  int min = 0, max = 0;
+
+  int? _generatedNumber;
+  int? get generatedRandomNumber => _generatedNumber;
+}
 
 class RandomizerChangeNotifier extends ChangeNotifier {
   int min = 0, max = 0;
