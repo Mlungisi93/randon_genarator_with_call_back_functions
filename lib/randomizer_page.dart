@@ -14,12 +14,12 @@ class RandomizerPage extends ConsumerWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title: const Text('Randomize'),
+        title: const Text('Randomizer'),
       ),
       body: Center(
         child: Text(
           //without consumer this won't change the value
-          randomizerNotifier.generatedRandomNumber?.toString() ??
+          randomizerNotifier.generatedNumber?.toString() ??
               'Click generate button below',
           style: const TextStyle(fontSize: 42),
         ),
@@ -39,7 +39,7 @@ class RandomizerPage extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          widgetRef.read(randomizerProvider).generateRandomNumber();
+          widgetRef.read(randomizerProvider.notifier).generateRandomNumber();
           // this would work without consumer in the text field(widget) you change to trigger rebuild
         },
         label: const Text('Generate'),

@@ -1,30 +1,40 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class RandomizerStateNotifier extends StateNotifier {
-  RandomizerStateNotifier(super.state);
-  int min = 0, max = 0;
+part "random_generator_state_notifier.freezed.dart";
 
-  int? _generatedNumber;
-  int? get generatedRandomNumber => _generatedNumber;
+@freezed
+class RandomizerState with _$RandomizerState {
+  const RandomizerState._();
+  const factory RandomizerState({
+    @Default(0) int min,
+    @Default(0) int max,
+    int? generatedNumber,
+  }) = _RandomizerState;
 }
 
-class RandomizerChangeNotifier extends ChangeNotifier {
-  int min = 0, max = 0;
+class RandomGeneratorStateNotifier extends StateNotifier<RandomizerState> {
+  RandomGeneratorStateNotifier() : super(const RandomizerState());
+
   final _randomGenerator = Random();
 
-  int? _generatedNumber;
-
-  int? get generatedRandomNumber => _generatedNumber;
-
   void generateRandomNumber() {
-    _generatedNumber = min + _randomGenerator.nextInt((max - min) + 1);
+    //immutable data class, you replace it with a copy of previous state, never update it in place
+    //state notifier has a state field in this case RandomizerState
+    state = state.copyWith(
+        generatedNumber:
+            state.min + _randomGenerator.nextInt((state.max - state.min) + 1));
+  }
 
-    notifyListeners();
-    //after this we removed hooker dependency and added provider
-    //then we need to make this class available in our widget tree by adding to the top of the tree(MaterialApp)
-    //by wrapping MP with provider
+  void setMin(int value) {
+    state = state.copyWith(min: value);
+  }
+
+  void setMax(int value) {
+    state = state.copyWith(max: value);
   }
 }

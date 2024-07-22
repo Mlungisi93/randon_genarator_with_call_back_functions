@@ -10,7 +10,8 @@ void main() {
 }
 
 final randomizerProvider =
-    ChangeNotifierProvider((ref) => RandomizerChangeNotifier());
+    StateNotifierProvider<RandomGeneratorStateNotifier, RandomizerState>(
+        (ref) => RandomGeneratorStateNotifier());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
